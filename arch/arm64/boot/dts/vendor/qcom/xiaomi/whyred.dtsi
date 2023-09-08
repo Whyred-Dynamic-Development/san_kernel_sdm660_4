@@ -1,0 +1,4 @@
+// SPDX-License-Identifier: GPL-2.0-only
+
+#include "longcheer/common/longcheer-sdm636.dtsi"
+#include "longcheer/whyred/whyred-base.dtsi"
