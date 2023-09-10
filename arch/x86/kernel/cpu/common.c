@@ -2100,7 +2100,7 @@ void microcode_check(void)
 	struct cpuinfo_x86 info;
 
 	perf_check_microcode();
-
+	amd_check_microcode();
 	/* Reload CPUID max function as it might've changed. */
 	info.cpuid_level = cpuid_eax(0);
 

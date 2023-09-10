@@ -5,7 +5,7 @@
 #include <asm/cpu.h>
 #include <linux/earlycpio.h>
 #include <linux/initrd.h>
-
+#include <asm/microcode_amd.h>
 struct ucode_patch {
 	struct list_head plist;
 	void *data;		/* Intel uses only this one */
