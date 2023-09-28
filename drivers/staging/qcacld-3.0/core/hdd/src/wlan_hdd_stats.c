@@ -312,10 +312,10 @@ static bool put_wifi_wmm_ac_stat(wmi_wmm_ac_stats *stats,
 			stats->contention_time_max) ||
 	    nla_put_u32(vendor_event,
 			QCA_WLAN_VENDOR_ATTR_LL_STATS_WMM_AC_CONTENTION_TIME_AVG,
-			stats->contention_num_samples)) {
+			stats->contention_time_avg) ||
 	    nla_put_u32(vendor_event,
 			QCA_WLAN_VENDOR_ATTR_LL_STATS_WMM_AC_CONTENTION_NUM_SAMPLES,
-			stats->contentionNumSamples)) {
+			stats->contention_num_samples)) {
 		hdd_err("QCA_WLAN_VENDOR_ATTR put fail");
 		return false;
 	}
