@@ -1718,6 +1718,7 @@ static struct task_struct *_pick_next_task_rt(struct rq *rq)
 		rt_se = pick_next_rt_entity(rq, rt_rq);
 		BUG_ON(!rt_se);
 		rt_rq = group_rt_rq(rt_se);
+
 	} while (rt_rq);
 
 	p = rt_task_of(rt_se);
