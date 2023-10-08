@@ -109,7 +109,3 @@
 		 750000000>;
 };
 
-&msm_gpu {
-	/* Update GPU chip ID*/
-	qcom,chipid = <0x05000900>;
-};

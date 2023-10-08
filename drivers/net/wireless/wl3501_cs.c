@@ -133,8 +133,8 @@ static const struct {
 
 /**
  * iw_valid_channel - validate channel in regulatory domain
- * @reg_comain - regulatory domain
- * @channel - channel to validate
+ * @reg_domain: regulatory domain
+ * @channel: channel to validate
  *
  * Returns 0 if invalid in the specified regulatory domain, non-zero if valid.
  */
@@ -153,7 +153,7 @@ static int iw_valid_channel(int reg_domain, int channel)
 
 /**
  * iw_default_channel - get default channel for a regulatory domain
- * @reg_comain - regulatory domain
+ * @reg_domain: regulatory domain
  *
  * Returns the default channel for a regulatory domain
  */
@@ -236,6 +236,7 @@ static int wl3501_get_flash_mac_addr(struct wl3501_card *this)
 
 /**
  * wl3501_set_to_wla - Move 'size' bytes from PC to card
+ * @this: Card
  * @dest: Card addressing space
  * @src: PC addressing space
  * @size: Bytes to move
@@ -258,6 +259,7 @@ static void wl3501_set_to_wla(struct wl3501_card *this, u16 dest, void *src,
 
 /**
  * wl3501_get_from_wla - Move 'size' bytes from card to PC
+ * @this: Card
  * @src: Card addressing space
  * @dest: PC addressing space
  * @size: Bytes to move
@@ -454,12 +456,10 @@ out:
 
 /**
  * wl3501_send_pkt - Send a packet.
- * @this - card
- *
- * Send a packet.
- *
- * data = Ethernet raw frame.  (e.g. data[0] - data[5] is Dest MAC Addr,
+ * @this : card
+ * @data: Ethernet raw frame.  (e.g. data[0] - data[5] is Dest MAC Addr,
  *                                   data[6] - data[11] is Src MAC Addr)
+ * @len: Packet length
  * Ref: IEEE 802.11
  */
 static int wl3501_send_pkt(struct wl3501_card *this, u8 *data, u16 len)
@@ -722,7 +722,7 @@ static void wl3501_mgmt_scan_confirm(struct wl3501_card *this, u16 addr)
 
 /**
  * wl3501_block_interrupt - Mask interrupt from SUTRO
- * @this - card
+ * @this : card
  *
  * Mask interrupt from SUTRO. (i.e. SUTRO cannot interrupt the HOST)
  * Return: 1 if interrupt is originally enabled
@@ -739,7 +739,7 @@ static int wl3501_block_interrupt(struct wl3501_card *this)
 
 /**
  * wl3501_unblock_interrupt - Enable interrupt from SUTRO
- * @this - card
+ * @this : card
  *
  * Enable interrupt from SUTRO. (i.e. SUTRO can interrupt the HOST)
  * Return: 1 if interrupt is originally enabled
@@ -1113,8 +1113,8 @@ static inline void wl3501_ack_interrupt(struct wl3501_card *this)
 
 /**
  * wl3501_interrupt - Hardware interrupt from card.
- * @irq - Interrupt number
- * @dev_id - net_device
+ * @irq : Interrupt number
+ * @dev_id : net_device
  *
  * We must acknowledge the interrupt as soon as possible, and block the
  * interrupt from the same card immediately to prevent re-entry.
@@ -1252,7 +1252,7 @@ static int wl3501_close(struct net_device *dev)
 
 /**
  * wl3501_reset - Reset the SUTRO.
- * @dev - network device
+ * @dev : network device
  *
  * It is almost the same as wl3501_open(). In fact, we may just wl3501_close()
  * and wl3501_open() again, but I wouldn't like to free_irq() when the driver
@@ -1415,7 +1415,7 @@ static struct iw_statistics *wl3501_get_wireless_stats(struct net_device *dev)
 
 /**
  * wl3501_detach - deletes a driver "instance"
- * @link - FILL_IN
+ * @link : FILL_IN
  *
  * This deletes a driver "instance". The device is de-registered with Card
  * Services. If it has been released, all local data structures are freed.
