@@ -1412,7 +1412,7 @@ struct ext4_sb_info {
 	struct super_block *s_sb;
 
 	/* Journaling */
-	struct journal_s *s_journal;
+	struct block_device *s_journal_bdev;
 	struct list_head s_orphan;
 	struct mutex s_orphan_lock;
 	unsigned long s_ext4_flags;		/* Ext4 superblock flags */
