@@ -193,7 +193,7 @@ static ssize_t isolate_show(struct device *dev,
 	int cpuid = cpu->dev.id;
 	unsigned int isolated = cpu_isolated(cpuid);
 
-	rc = sprintf(buf, PAGE_SIZE-2, "%d\n", isolated);
+	rc = snprintf(buf, PAGE_SIZE-2, "%d\n", isolated);
 
 	return rc;
 }
@@ -354,7 +354,7 @@ static ssize_t print_cpus_offline(struct device *dev,
 						      nr_cpu_ids, total_cpus-1);
 	}
 
-	n += sysfs_emit(&buf[n], len - n, "\n");
+	n += snprintf(&buf[n], len - n, "\n");
 	return n;
 }
 static DEVICE_ATTR(offline, 0444, print_cpus_offline, NULL);
