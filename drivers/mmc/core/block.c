@@ -2060,6 +2060,7 @@ static void mmc_blk_mq_dec_in_flight(struct mmc_queue *mq,
 		mmc_put_card(mq->card, &mq->ctx);
 }
 
+
 static void mmc_blk_mq_post_req(struct mmc_queue *mq, struct request *req)
 {
 	enum mmc_issue_type issue_type = mmc_issue_type(mq, req);
