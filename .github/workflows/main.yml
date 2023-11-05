@@ -1,0 +1,24 @@
+name: Build on Tag
+
+on: workflow_dispatch
+
+jobs:
+  build:
+    runs-on: buildjet-32vcpu-ubuntu-2204
+    steps:
+    - name: Checkout kernel source
+      uses: actions/checkout@v2
+
+    - name: Android kernel build
+      uses: lemniskett/android-kernel-actions@master
+      id: build
+      env:
+        NAME: Scarlet
+      with:
+        arch: arm64
+        compiler: aosp-clang/master/clang-r450784e
+        defconfig: vendor/whyred-perf_defconfig
+        image: Image.gz-dtb
+
+    - name: Release build
+      run: curl --upload-file ${{ steps.build.outputs.outfile }} https://transfer.sh
