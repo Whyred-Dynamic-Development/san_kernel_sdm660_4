@@ -7,7 +7,9 @@ jobs:
     runs-on: buildjet-32vcpu-ubuntu-2204
     steps:
     - name: Checkout kernel source
-      uses: actions/checkout@v2
+      uses: actions/checkout@v4
+      with:
+        submodules: 'true'
 
     - name: Android kernel build
       uses: lemniskett/android-kernel-actions@master
