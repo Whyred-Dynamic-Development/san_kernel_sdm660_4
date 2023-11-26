@@ -533,6 +533,10 @@ static int pre_chg_current[] = {
 	200, 300, 400, 500, 600, 700,
 };
 
+#ifdef CONFIG_MACH_LONGCHEER
+static bool is_global_version;
+#endif
+
 static int smb1351_read_reg(struct smb1351_charger *chip, int reg, u8 *val)
 {
 	s32 ret;
@@ -800,7 +804,7 @@ static int smb1351_fastchg_current_set(struct smb1351_charger *chip,
 }
 
 #define MIN_FLOAT_MV		3500
-#define MAX_FLOAT_MV		4508
+#define MAX_FLOAT_MV		4500
 #define VFLOAT_STEP_MV		20
 
 static int smb1351_float_voltage_set(struct smb1351_charger *chip,
@@ -2736,6 +2740,16 @@ static int is_parallel_charger(struct i2c_client *client)
 	return of_property_read_bool(node, "qcom,parallel-charger");
 }
 
+#ifdef CONFIG_MACH_LONGCHEER
+static int __init hwc_setup(char *s)
+{
+	is_global_version = !strcmp(s, "Global");
+	return 1;
+}
+
+__setup("androidboot.hwc=", hwc_setup);
+#endif
+
 static int create_debugfs_entries(struct smb1351_charger *chip)
 {
 	struct dentry *ent;
@@ -2945,18 +2959,6 @@ fail_smb1351_regulator_init:
 	return rc;
 }
 
-#ifdef CONFIG_MACH_LONGCHEER
-bool is_global_version;
-
-static int __init hwc_setup(char *s)
-{
-	is_global_version = !strcmp(s, "Global");
-	return 1;
-}
-
-__setup("androidboot.hwc=", hwc_setup);
-#endif
-
 static int smb1351_parallel_charger_probe(struct i2c_client *client,
 				const struct i2c_device_id *id)
 {
@@ -2966,9 +2968,8 @@ static int smb1351_parallel_charger_probe(struct i2c_client *client,
 	struct power_supply_config parallel_psy_cfg = {};
 
 #ifdef CONFIG_MACH_LONGCHEER
-	if (is_global_version && !IS_ENABLED(CONFIG_MACH_XIAOMI_WAYNE) &&
-	    !IS_ENABLED(CONFIG_MACH_XIAOMI_LAVENDER)) {
-		pr_info("Global version doesn't have smb1351 regulator, killing probe\n");
+	if (is_global_version && !IS_ENABLED(CONFIG_MACH_XIAOMI_WAYNE)) {
+		pr_info("Global version doesn't have smb1351 regulator, skipping probe\n");
 		return -ENODEV;
 	}
 #endif

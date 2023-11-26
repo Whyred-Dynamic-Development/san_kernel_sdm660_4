@@ -141,7 +141,6 @@ config ARM64
 	select HAVE_FUNCTION_GRAPH_TRACER if !SHADOW_CALL_STACK
 	select HAVE_GCC_PLUGINS
 	select HAVE_GENERIC_DMA_COHERENT
-	select HAVE_HW_BREAKPOINT if PERF_EVENTS
 	select HAVE_IRQ_TIME_ACCOUNTING
 	select HAVE_KERNEL_GZIP
 	select HAVE_KERNEL_LZ4
@@ -822,20 +821,6 @@ config NR_CPUS
 	range 2 4096
 	# These have to remain sorted largest to smallest
 	default "64"
-
-config LITTLE_CPU_MASK
-	int "Bitmask of available LITTLE CPUs"
-	help
-	  This is a bitmask specifying which of the CPUs are LITTLE in a
-	  heterogeneous system. Use 0 if you are unsure, which just results in
-	  this storing the bitmask of all available CPUs.
-
-config BIG_CPU_MASK
-	int "Bitmask of available big CPUs"
-	help
-	  This is a bitmask specifying which of the CPUs are big in a
-	  heterogeneous system. Use 0 if you are unsure, which just results in
-	  this storing the bitmask of all available CPUs.
 
 config HOTPLUG_CPU
 	bool "Support for hot-pluggable CPUs"

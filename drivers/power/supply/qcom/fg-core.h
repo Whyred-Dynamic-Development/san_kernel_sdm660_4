@@ -87,7 +87,7 @@
 
 #define FULL_CAPACITY			100
 #define FULL_SOC_RAW			255
-#if defined(CONFIG_MACH_XIAOMI_LAVENDER) || defined(CONFIG_MACH_XIAOMI_WAYNE)
+#ifdef CONFIG_MACH_XIAOMI_WAYNE
 #define FULL_SOC_REPORT_THR		250
 #endif
 
@@ -478,16 +478,13 @@ struct fg_dev {
 	int			last_msoc;
 	int			last_recharge_volt_mv;
 	int			delta_temp_irq_count;
-#ifdef CONFIG_MACH_LONGCHEER
-	int			battery_full_design;
-#endif
 	enum esr_filter_status	esr_flt_sts;
 	bool			profile_available;
 	enum prof_load_status	profile_load_status;
 	bool			battery_missing;
 	bool			fg_restarting;
 	bool			charge_full;
-#if defined(CONFIG_MACH_XIAOMI_LAVENDER) || defined(CONFIG_MACH_XIAOMI_WAYNE)
+#ifdef CONFIG_MACH_XIAOMI_WAYNE
 	bool			report_full;
 #endif
 	bool			recharge_soc_adjusted;
