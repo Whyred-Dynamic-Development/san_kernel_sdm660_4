@@ -19,7 +19,7 @@ jobs:
       with:
         arch: arm64
         compiler: aosp-clang/master/clang-r450784e
-        defconfig: vendor/whyred-perf-qti_defconfig
+        defconfig: vendor/bouquet_defconfig whyred.config
         image: Image.gz-dtb
 
     - name: Release build
