@@ -7,6 +7,7 @@
 #include <linux/mutex.h>
 #include <linux/spinlock.h>
 #include <linux/stop_machine.h>
+#include <linux/kthread.h>
 #include <linux/irq_work.h>
 #include <linux/tick.h>
 #include <linux/slab.h>
@@ -929,7 +930,6 @@ struct sched_group_capacity {
 	unsigned long capacity;
 	unsigned long max_capacity; /* Max per-cpu capacity in group */
 	unsigned long min_capacity; /* Min per-CPU capacity in group */
-	unsigned long next_update;
 	int imbalance; /* XXX unrelated to capacity but shared group state */
 	/*
 	 * Number of busy cpus in this group.

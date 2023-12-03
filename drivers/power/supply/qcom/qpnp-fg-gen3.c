@@ -672,10 +672,9 @@ static int fg_get_battery_temp(struct fg_chip *chip, int *val)
 			BATT_INFO_BATT_TEMP_LSB(chip),buf[1],buf[0]);
 	temp = ((buf[1] & BATT_TEMP_MSB_MASK) << 8) |
 		(buf[0] & BATT_TEMP_LSB_MASK);
-	temp = DIV_ROUND_CLOSEST(temp, 4);
 
-	/* Value is in Kelvin; Convert it to deciDegC */
-	temp = (temp - 273) * 10;
+	/* Value is in 0.25 Kelvin; convert it to deciDegC */
+	temp = DIV_ROUND_CLOSEST((temp - 273*4) * 10, 4);
 		pr_debug("LCT TEMP=%d\n",temp);
 
 #if defined (CONFIG_KERNEL_XIAOMI_TULIP)	
@@ -4055,6 +4054,12 @@ static int fg_psy_get_property(struct power_supply *psy,
 			return rc;
 		}
 		break;
+
+#ifdef CONFIG_MACH_LONGCHEER
+	case POWER_SUPPLY_PROP_ONLINE:
+		pval->intval = fg->online_status;
+		break;
+#endif
 	case POWER_SUPPLY_PROP_RESISTANCE:
 		rc = fg_get_battery_resistance(chip, &pval->intval);
 		break;
@@ -5641,7 +5646,7 @@ static int fg_parse_dt(struct fg_chip *chip)
 	rc = of_property_read_u32(node, "qcom,fg-esr-meas-curr-ma", &temp);
 	if (!rc) {
 		/* ESR measurement current range is 60-240 mA */
-		if (temp >= 60 || temp <= 240)
+		if (temp >= 60 && temp <= 240)
 			chip->dt.esr_meas_curr_ma = temp;
 	}
 
